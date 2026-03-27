@@ -7,6 +7,7 @@
 </head>
 <body>
   <h1>Task App</h1>
+  <h2>Points: <span id="points">0</span></h2>
 
   <input type="text" id="taskInput" placeholder="Enter a task">
   <button onclick="addTask()">Add Task</button>
@@ -14,6 +15,8 @@
   <ul id="taskList"></ul>
 
   <script>
+    let points = 0;
+
     function addTask() {
       const taskInput = document.getElementById("taskInput");
       const taskText = taskInput.value;
@@ -24,8 +27,19 @@
       }
 
       const li = document.createElement("li");
-      li.textContent = taskText;
+      li.textContent = taskText + " ";
 
+      const completeButton = document.createElement("button");
+      completeButton.textContent = "Complete";
+
+      completeButton.onclick = function () {
+        points += 10;
+        document.getElementById("points").textContent = points;
+        li.style.textDecoration = "line-through";
+        completeButton.disabled = true;
+      };
+
+      li.appendChild(completeButton);
       document.getElementById("taskList").appendChild(li);
 
       taskInput.value = "";
